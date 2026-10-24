@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#080812">
+<meta name="color-scheme" content="dark">
+
+<title>NexChat — Welcome</title>
+
+    <link rel="icon" href="https://i.ibb.co.com/LXjZY8jh/nexchat.png">
+
+
+<style>
+:root {
+    --bg: #080812;
+    --purple: #8b5cf6;
+    --violet: #6d4aff;
+    --cyan: #67e8f9;
+    --white: #f8f7ff;
+    --muted: #9293b2;
+    --glass: rgba(255,255,255,.045);
+    --border: rgba(255,255,255,.10);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+    width: 100%;
+    min-height: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+button {
+    font: inherit;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* =========================
+   BACKGROUND
+========================= */
+
+.screen {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 43%,
+            rgba(101,65,213,.16),
+            transparent 48%
+        ),
+        linear-gradient(
+            145deg,
+            #101020 0%,
+            #080812 48%,
+            #05060b 100%
+        );
+}
+
+.grid {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        );
+
+    background-size: 38px 38px;
+
+    mask-image: linear-gradient(
+        transparent,
+        black 20%,
+        black 80%,
+        transparent
+    );
+    -webkit-mask-image: linear-gradient(
+        transparent,
+        black 20%,
+        black 80%,
+        transparent
+    );
+}
+
+.ambient {
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+
+    background: #7040ff;
+    filter: blur(110px);
+    opacity: .14;
+
+    pointer-events: none;
+    will-change: transform;
+    animation: ambientFloat 7s ease-in-out infinite alternate;
+}
+
+@keyframes ambientFloat {
+    from { transform: translate(-25px, -12px) scale(.9); }
+    to   { transform: translate(25px, 12px) scale(1.12); }
+}
+
+/* =========================
+   BRAND INTRO
+========================= */
+
+.intro {
+    position: relative;
+    z-index: 2;
+
+    width: 100%;
+    padding: 16px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    transition: opacity .65s ease, transform .65s ease;
+}
+
+.brand {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 17px;
+    max-width: 100%;
+}
+
+/* Logo entry */
+
+.logo-wrap {
+    position: relative;
+    flex: 0 0 auto;
+
+    width: 96px;
+    height: 96px;
+
+    opacity: 0;
+    transform: translateX(-100vw) scale(.65);
+
+    animation: logoEntry 1.3s
+        cubic-bezier(.16, 1, .3, 1) .15s forwards;
+
+    will-change: transform, opacity;
+}
+
+.logo {
+    position: absolute;
+    inset: 9px;
+
+    display: grid;
+    place-items: center;
+
+    overflow: hidden;
+    border-radius: 25px;
+
+    background:
+        linear-gradient(
+            140deg,
+            #b7a0ff 0%,
+            #8655ff 36%,
+            #5833d4 70%,
+            #29205c 100%
+        );
+
+    border: 1px solid rgba(255,255,255,.32);
+
+    box-shadow:
+        0 0 20px rgba(139,92,246,.32),
+        0 0 55px rgba(139,92,246,.15),
+        inset 0 1px 1px rgba(255,255,255,.55),
+        inset 0 -9px 18px rgba(0,0,0,.23);
+}
+
+.logo::before {
+    content: "";
+    position: absolute;
+    inset: 1px;
+
+    border-radius: inherit;
+
+    background: linear-gradient(
+        135deg,
+        rgba(255,255,255,.28),
+        transparent 45%
+    );
+
+    pointer-events: none;
+    z-index: 1;
+}
+
+.logo img {
+    position: relative;
+    z-index: 2;
+
+    width: 68%;
+    height: 68%;
+
+    object-fit: contain;
+
+    filter:
+        drop-shadow(0 0 2px rgba(255,255,255,.8))
+        drop-shadow(0 3px 8px rgba(0,0,0,.25));
+}
+
+.logo-fallback {
+    position: absolute;
+    z-index: 0;
+
+    font-size: 36px;
+    font-weight: 850;
+    color: white;
+}
+
+/* Orbit around logo */
+
+.orbit {
+    position: absolute;
+    inset: -2px;
+    border-radius: 50%;
+
+    border: 1px solid transparent;
+    border-top-color: var(--cyan);
+    border-right-color: rgba(167,139,250,.8);
+
+    opacity: 0;
+
+    filter: drop-shadow(0 0 5px var(--cyan));
+
+    animation:
+        orbitReveal .3s ease 2s forwards,
+        orbitSpin 1s linear 2.3s 3;
+}
+
+.orbit::before {
+    content: "";
+    position: absolute;
+    inset: 5px;
+    border-radius: inherit;
+
+    border: 1px dashed rgba(167,139,250,.45);
+}
+
+/* Light beam */
+
+.flash {
+    position: absolute;
+    z-index: 5;
+
+    top: 50%;
+    left: 50%;
+
+    width: 0;
+    height: 2px;
+
+    transform: translateY(-50%);
+    opacity: 0;
+
+    background: white;
+
+    box-shadow:
+        0 0 8px white,
+        0 0 20px var(--cyan),
+        0 0 42px var(--purple);
+
+    pointer-events: none;
+
+    animation: lightFlash .85s
+        cubic-bezier(.2, .8, .2, 1) 1.35s forwards;
+}
+
+/* Name reveal */
+
+.name-wrap {
+    width: 0;
+    overflow: hidden;
+    flex: 0 1 auto;
+
+    animation: nameReveal .9s
+        cubic-bezier(.16, 1, .3, 1) 1.55s forwards;
+}
+
+.app-name {
+    display: block;
+    width: max-content;
+    white-space: nowrap;
+
+    font-size: clamp(22px, 5.4vw, 39px);
+    font-weight: 850;
+    letter-spacing: 1px;
+    line-height: 1.2;
+
+    color: transparent;
+
+    background: linear-gradient(
+        100deg,
+        #ffffff 0%,
+        #d6c9ff 48%,
+        #67e8f9 100%
+    );
+
+    background-clip: text;
+    -webkit-background-clip: text;
+
+    filter: drop-shadow(0 0 15px rgba(139,92,246,.2));
+}
+
+/* Tagline */
+
+.tagline {
+    position: absolute;
+    top: calc(50% + 83px);
+    left: 50%;
+
+    width: max-content;
+    max-width: 92vw;
+
+    transform: translate(-50%, 12px);
+    opacity: 0;
+
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    text-align: center;
+
+    color: #898ba9;
+
+    animation: taglineReveal .65s ease 2.1s forwards;
+}
+
+/* =========================
+   LOADING
+========================= */
+
+.loading {
+    position: absolute;
+    top: calc(50% + 124px);
+    left: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    width: max-content;
+
+    transform: translateX(-50%);
+    opacity: 0;
+
+    animation:
+        loadingReveal .4s ease 2.15s forwards,
+        loadingFade .4s ease 4.95s forwards;
+}
+
+.loading-ring {
+    width: 15px;
+    height: 15px;
+
+    border-radius: 50%;
+    border: 2px solid rgba(139,92,246,.18);
+    border-top-color: var(--cyan);
+    border-right-color: var(--purple);
+
+    animation: orbitSpin .7s linear infinite;
+}
+
+.loading-text {
+    font-size: 10px;
+    font-weight: 650;
+    letter-spacing: 2.5px;
+    color: #a5a7c0;
+}
+
+/* =========================
+   ERROR PANEL
+========================= */
+
+.error-panel {
+    position: absolute;
+    z-index: 10;
+
+    left: 50%;
+    top: 50%;
+
+    width: min(360px, calc(100% - 36px));
+    padding: 25px 21px;
+
+    text-align: center;
+
+    border: 1px solid rgba(255,100,125,.20);
+    border-radius: 25px;
+
+    background: rgba(17,17,32,.95);
+
+    box-shadow:
+        0 25px 80px rgba(0,0,0,.4),
+        0 0 45px rgba(255,70,100,.055);
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, -46%) scale(.96);
+
+    transition:
+        opacity .3s ease,
+        transform .3s ease,
+        visibility .3s;
+}
+
+.error-panel.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.error-icon {
+    display: grid;
+    place-items: center;
+
+    width: 55px;
+    height: 55px;
+
+    margin: 0 auto 16px;
+
+    border: 1px solid rgba(255,100,125,.25);
+    border-radius: 18px;
+
+    color: #ff8295;
+    background: rgba(255,75,105,.09);
+
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.error-panel h2 {
+    margin-bottom: 9px;
+
+    font-size: 21px;
+    font-weight: 750;
+}
+
+.error-message {
+    color: #a3a4bd;
+    font-size: 13px;
+    line-height: 1.75;
+    overflow-wrap: anywhere;
+}
+
+.error-detail {
+    margin-top: 12px;
+    padding: 10px;
+
+    color: #ffb0bb;
+    background: rgba(255,75,105,.055);
+
+    border: 1px solid rgba(255,100,125,.1);
+    border-radius: 10px;
+
+    font-size: 11px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.retry-btn {
+    width: 100%;
+    margin-top: 19px;
+    padding: 13px 16px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 9px;
+
+    border: 1px solid rgba(255,255,255,.16);
+    border-radius: 13px;
+
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+
+    background: linear-gradient(
+        110deg,
+        #8053f5,
+        #5737c7
+    );
+
+    box-shadow: 0 5px 24px rgba(124,58,237,.17);
+
+    cursor: pointer;
+    transition: transform .2s, opacity .2s;
+}
+
+.retry-btn:active {
+    transform: scale(.98);
+}
+
+.retry-btn:disabled {
+    opacity: .6;
+    cursor: wait;
+}
+
+.retry-symbol {
+    display: inline-block;
+    font-size: 17px;
+}
+
+.retry-btn:disabled .retry-symbol {
+    animation: orbitSpin .8s linear infinite;
+}
+
+/* =========================
+   NEXT SCREEN
+========================= */
+
+.next-screen {
+    position: fixed;
+    z-index: 20;
+    inset: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 25px;
+    text-align: center;
+
+    background:
+        radial-gradient(
+            circle at 50% 38%,
+            rgba(109,40,217,.2),
+            transparent 48%
+        ),
+        #080812;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition: opacity .65s ease, visibility .65s;
+}
+
+.next-screen.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.welcome-logo {
+    width: 65px;
+    height: 65px;
+    margin-bottom: 22px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 21px;
+    border: 1px solid rgba(255,255,255,.2);
+
+    background: linear-gradient(
+        145deg,
+        #a98bfa,
+        #7044e8 60%,
+        #302064
+    );
+
+    box-shadow: 0 0 35px rgba(139,92,246,.2);
+}
+
+.welcome-logo img {
+    width: 65%;
+    height: 65%;
+    object-fit: contain;
+}
+
+.next-screen h1 {
+    font-size: clamp(31px, 7vw, 46px);
+    letter-spacing: -1px;
+    margin-bottom: 12px;
+}
+
+.next-screen p {
+    max-width: 300px;
+
+    color: #999bb5;
+    font-size: 14px;
+    line-height: 1.9;
+}
+
+.continue-btn {
+    margin-top: 28px;
+    padding: 14px 30px;
+
+    border: 1px solid rgba(255,255,255,.16);
+    border-radius: 14px;
+
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+
+    background: linear-gradient(
+        110deg,
+        #8053f5,
+        #5436b8
+    );
+
+    box-shadow: 0 8px 30px rgba(124,58,237,.2);
+    cursor: pointer;
+
+    transition: transform .2s, box-shadow .2s;
+}
+
+.continue-btn:active {
+    transform: scale(.97);
+}
+
+/* =========================
+   KEYFRAMES
+========================= */
+
+@keyframes logoEntry {
+    0% {
+        opacity: 0;
+        transform: translateX(-100vw) scale(.65);
+    }
+    55% {
+        opacity: 1;
+        transform: translateX(20px) scale(1.07);
+    }
+    72% {
+        transform: translateX(-10px) scale(.97);
+    }
+    86% {
+        transform: translateX(4px) scale(1.015);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+@keyframes lightFlash {
+    0%   { width: 0; opacity: 0; }
+    20%  { width: 35px; opacity: 1; }
+    65%  { width: 190px; opacity: .95; }
+    100% { width: 260px; opacity: 0; }
+}
+
+@keyframes nameReveal {
+    0%   { width: 0; }
+    100% { width: 100%; }
+}
+
+@keyframes orbitReveal {
+    to { opacity: 1; }
+}
+
+@keyframes orbitSpin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes taglineReveal {
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+@keyframes loadingReveal {
+    to { opacity: 1; }
+}
+
+@keyframes loadingFade {
+    to { opacity: 0; }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 480px) {
+    .brand {
+        gap: 11px;
+    }
+
+    .logo-wrap {
+        width: 78px;
+        height: 78px;
+    }
+
+    .logo {
+        inset: 7px;
+        border-radius: 21px;
+    }
+
+    .logo-name {
+        font-size: 30px;
+    }
+
+    .app-name {
+        font-size: clamp(20px, 5.5vw, 27px);
+        letter-spacing: .4px;
+    }
+
+    .tagline {
+        font-size: 9px;
+        letter-spacing: 2.6px;
+    }
+
+    .loading {
+        top: calc(50% + 110px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ambient {
+        animation: none;
+    }
+
+    .logo-wrap {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+
+    .orbit {
+        animation: none;
+        opacity: 1;
+    }
+
+    .flash {
+        display: none;
+    }
+
+    .name-wrap {
+        animation: none;
+        width: 100%;
+    }
+
+    .tagline {
+        animation: none;
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- INTRO -->
+
+<section class="screen" id="intro">
+
+    <div class="grid"></div>
+    <div class="ambient"></div>
+
+    <div class="intro" id="introContent">
+
+        <div class="brand">
+
+            <div class="logo-wrap">
+
+                <div class="orbit"></div>
+
+                <div class="logo">
+
+                    <span class="logo-fallback" id="logoFallback">
+                        
+                    </span>
+
+                    <img
+                        id="brandLogo"
+                        src="https://i.ibb.co.com/LXjZY8jh/nexchat.png"
+                        alt="NexChat logo"
+                        onerror="this.style.display='none';"
+                        onload="document.getElementById('logoFallback').style.display='none';"
+                    >
+
+                </div>
+
+            </div>
+
+            <div class="flash"></div>
+
+            <div class="name-wrap">
+                <span class="app-name">NexChat</span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="tagline">A NEW CHAT EXPERIENCE</div>
+
+    <div class="loading" id="loading">
+
+        <div class="loading-ring"></div>
+
+        <span class="loading-text" id="loadingText">
+            CONNECTING
+        </span>
+
+    </div>
+
+    <!-- CONNECTION ERROR -->
+
+    <div class="error-panel" id="errorPanel">
+
+        <div class="error-icon">!</div>
+
+        <h2 id="errorTitle">Connection Failed</h2>
+
+        <p class="error-message" id="errorMessage">
+            Unable to connect to NexChat.
+            Check your internet connection and try again.
+        </p>
+
+        <div class="error-detail" id="errorDetail">
+            The server did not respond.
+        </div>
+
+        <button class="retry-btn" id="retryBtn" type="button">
+            <span class="retry-symbol" id="retrySymbol">↻</span>
+            <span id="retryText">Try Again</span>
+        </button>
+
+    </div>
+
+</section>
+
+<!-- NEXT SCREEN -->
+
+<section class="next-screen" id="nextScreen">
+
+    <div class="welcome-logo">
+        <img
+            src="https://i.ibb.co.com/LXjZY8jh/nexchat.png"
+            alt="NexChat"
+            onerror="this.style.display='none';"
+        >
+    </div>
+
+    <h1>Welcome to NexChat.</h1>
+
+    <p>
+        Your next chat experience starts here.
+        Everything is ready.
+    </p>
+
+    <button class="continue-btn" id="continueBtn">
+        Get Started →
+    </button>
+
+</section>
+
+<script>
+'use strict';
+
+/* ======================================
+   CONFIGURATION
+====================================== */
+
+// Local development server:
+const API_BASE_URL = 'http://localhost:3000';
+
+// Use '/' if your server responds successfully at its root.
+// If you have a health route, use '/health' instead.
+const HEALTH_PATH = '/';
+
+const INTRO_DURATION = 5500;
+const REQUEST_TIMEOUT = 8000;
+
+// Actual next page:
+const NEXT_PAGE = 'nexchatV2.html';
+
+/* ======================================
+   ELEMENTS
+====================================== */
+
+const intro = document.getElementById('intro');
+const nextScreen = document.getElementById('nextScreen');
+
+const loading = document.getElementById('loading');
+const loadingText = document.getElementById('loadingText');
+
+const errorPanel = document.getElementById('errorPanel');
+const errorTitle = document.getElementById('errorTitle');
+const errorMessage = document.getElementById('errorMessage');
+const errorDetail = document.getElementById('errorDetail');
+
+const retryBtn = document.getElementById('retryBtn');
+const retryText = document.getElementById('retryText');
+
+const continueBtn = document.getElementById('continueBtn');
+
+/* ======================================
+   STATE
+====================================== */
+
+let introStartedAt = 0;
+let checking = false;
+let transitionStarted = false;
+let serverReady = false;
+let requestController = null;
+
+/* ======================================
+   HELPERS
+====================================== */
+
+function showError(title, message, detail) {
+    errorTitle.textContent = title;
+    errorMessage.textContent = message;
+    errorDetail.textContent = detail;
+
+    loading.classList.add('hidden');
+    errorPanel.classList.add('show');
+}
+
+function hideError() {
+    errorPanel.classList.remove('show');
+}
+
+function setRetryState(isLoading) {
+    retryBtn.disabled = isLoading;
+
+    retryText.textContent = isLoading
+        ? 'Connecting...'
+        : 'Try Again';
+
+    document.getElementById('retrySymbol').textContent =
+        isLoading ? '⟳' : '↻';
+}
+
+function getEndpoint() {
+    return API_BASE_URL.replace(/\/+$/, '') +
+        '/' +
+        HEALTH_PATH.replace(/^\/+/, '');
+}
+
+/* ======================================
+   SERVER CONNECTION
+====================================== */
+
+async function checkServer() {
+
+    if (checking || transitionStarted) {
+        return;
+    }
+
+    checking = true;
+    serverReady = false;
+
+    setRetryState(true);
+    hideError();
+
+    loading.classList.remove('hidden');
+    loadingText.textContent = 'CONNECTING';
+
+    requestController = new AbortController();
+
+    const timeoutId = setTimeout(() => {
+        requestController.abort();
+    }, REQUEST_TIMEOUT);
+
+    try {
+
+        const endpoint = getEndpoint();
+
+        const response = await fetch(endpoint, {
+            method: 'GET',
+            cache: 'no-store',
+            signal: requestController.signal,
+            headers: {
+                'Accept': 'application/json, text/plain, */*'
+            }
+        });
+
+        clearTimeout(timeoutId);
+
+        // A 404, 403, 500 etc. must NOT pass.
+        if (!response.ok) {
+            throw new Error(
+                `HTTP ${response.status} ${response.statusText || ''}`.trim()
+            );
+        }
+
+        serverReady = true;
+
+        loadingText.textContent = 'CONNECTED';
+
+        console.log('NexChat server connection successful:', endpoint);
+
+        // Keep the intro visible for its minimum duration.
+        const elapsed = performance.now() - introStartedAt;
+
+        const remaining = Math.max(
+            0,
+            INTRO_DURATION - elapsed
+        );
+
+        setTimeout(() => {
+
+            if (serverReady && !transitionStarted) {
+                showNextScreen();
+            }
+
+        }, remaining);
+
+    } catch (error) {
+
+        clearTimeout(timeoutId);
+
+        serverReady = false;
+
+        console.error('NexChat connection error:', error);
+
+        if (error.name === 'AbortError') {
+
+            showError(
+                'Connection Timeout',
+                'The server took too long to respond.',
+                `Request timed out after ${REQUEST_TIMEOUT / 1000} seconds.`
+            );
+
+        } else if (error instanceof TypeError) {
+
+            showError(
+                'Server Unreachable',
+                'Could not connect to the server. Check your internet connection and server status.',
+                'Possible causes: network offline, incorrect URL, CORS restriction, or server unavailable.'
+            );
+
+        } else if (error.message.startsWith('HTTP ')) {
+
+            showError(
+                'Server Rejected Request',
+                'The server responded, but the request was not successful.',
+                error.message
+            );
+
+        } else {
+
+            showError(
+                'Connection Error',
+                'An unexpected error occurred while connecting.',
+                error.message || 'Unknown error'
+            );
+        }
+
+    } finally {
+
+        checking = false;
+        requestController = null;
+        setRetryState(false);
+    }
+}
+
+/* ======================================
+   SHOW NEXT SCREEN
+====================================== */
+
+function showNextScreen() {
+
+    if (transitionStarted || !serverReady) {
+        return;
+    }
+
+    transitionStarted = true;
+
+    hideError();
+
+    intro.style.opacity = '0';
+    intro.style.pointerEvents = 'none';
+
+    setTimeout(() => {
+
+        intro.style.display = 'none';
+        nextScreen.classList.add('show');
+
+    }, 650);
+}
+
+/* ======================================
+   START INTRO ONCE
+====================================== */
+
+function startApp() {
+
+    if (introStartedAt !== 0) {
+        return;
+    }
+
+    introStartedAt = performance.now();
+
+    checkServer();
+}
+
+if (document.readyState === 'complete') {
+    startApp();
+} else {
+    window.addEventListener('load', startApp, {
+        once: true
+    });
+}
+
+/* ======================================
+   RETRY
+====================================== */
+
+retryBtn.addEventListener('click', () => {
+
+    if (checking || transitionStarted) {
+        return;
+    }
+
+    checkServer();
+});
+
+/* ======================================
+   NEXT PAGE
+====================================== */
+
+continueBtn.addEventListener('click', () => {
+
+    window.location.href = NEXT_PAGE;
+
+});
+</script>
+
+</body>
+</html>
